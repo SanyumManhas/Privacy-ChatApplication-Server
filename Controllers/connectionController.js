@@ -38,20 +38,22 @@ exports.getConnections = async(req,res)=>{
     try{
         const token = req.cookies.token;
         const decoded = jwt.verify(token,process.env.SECRET_KEY);
-        const result = await connModel.find({members: decoded.id});
         
-        const populatedRecievers = await Promise.all(
-            result.map(async(connection)=>{
-                const receiverID = connection.members.find((id)=> id != decoded.id);
-                const receiver = await userModel.findById(receiverID).select("-password");
-                return {
-                    connectionId: connection._id,
-                    receiver: receiver,
-                }
-            })
-        )
+        console.log("Fetching Connections....")
+        const connections = await connModel.find({members: decoded.id}).populate({
+            path: 'members',
+            select: '-password',
+            match: {_id: {$ne: decoded.id}}
+        })
 
-        res.send({success:true, connections:populatedRecievers});
+        console.log("Populating Receivers...")
+        const populatedReceivers = connections.map(conn=>({
+            connectionId: conn._id,
+            receiver: conn.members[0]
+        }))
+
+        console.log("Sending Data...")
+        res.send({success:true, connections: populatedReceivers});
     }
     catch(e)
     {
