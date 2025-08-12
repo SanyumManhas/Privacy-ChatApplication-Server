@@ -14,13 +14,13 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
    cors:{
-        origin: "http://localhost:3000",
+        origin: "https://privacy-chatapplication-client.onrender.com",
         credentials:true
     }  
 })
 
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:"https://privacy-chatapplication-client.onrender.com",
     credentials:true
 }));
 
