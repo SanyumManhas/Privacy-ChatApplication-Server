@@ -36,7 +36,15 @@ exports.createConn = async(req,res)=>{
 
 exports.getConnections = async(req,res)=>{
     try{
-        const token = req.cookies.token;
+        const token = req.cookies?.token; 
+        if(!token)
+        {
+            const authHeader = req.headers.authorization;
+            if(authHeader && authHeader.startsWith("Bearer ")
+               {
+                    const token = authHeader.split(" ")[1];
+               }
+        }
         const decoded = jwt.verify(token,process.env.SECRET_KEY);
         
         console.log("Fetching Connections....")
