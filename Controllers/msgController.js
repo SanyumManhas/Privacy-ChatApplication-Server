@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 
 exports.sendMsg = async(req,res)=>{
     try {
-        const token = req.cookies?.token; // assuming you set cookie name as 'token'
+        let token = req.cookies?.token; // assuming you set cookie name as 'token'
         if(!token)
         {
             const authHeader = req.headers.authorization;
             if(authHeader && authHeader.startsWith("Bearer "))
                {
-                    const token = authHeader.split(" ")[1];
+                     token = authHeader.split(" ")[1];
                }
         }
 
