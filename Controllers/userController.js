@@ -106,7 +106,7 @@ exports.loginUser = async(req,res)=>{
             const userObj = user.toObject();
             delete userObj.password;
             
-            res.send({ success: true, userdetails:userObj});
+            res.send({ success: true, userdetails:userObj, token});
         }
         else
         {
