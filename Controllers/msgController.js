@@ -7,7 +7,7 @@ exports.sendMsg = async(req,res)=>{
         if(!token)
         {
             const authHeader = req.headers.authorization;
-            if(authHeader && authHeader.startsWith("Bearer ")
+            if(authHeader && authHeader.startsWith("Bearer "))
                {
                     const token = authHeader.split(" ")[1];
                }
