@@ -24,6 +24,12 @@ app.use(cors({
     credentials:true
 }));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+
 app.use(cookieParser());
 
 mongoose.connect("mongodb+srv://msanyum:ARfdDsQRMwxhKsS3@cluster0.r6svpnh.mongodb.net/Privacy?retryWrites=true&w=majority&appName=Cluster0").then(()=>{
