@@ -123,9 +123,10 @@ exports.logoutUser = async(req,res)=>{
     try{
         res.clearCookie("token", {
             httpOnly: true,
-            // secure: true,
-            sameSite: "lax",
-            path: "/" 
+            secure: process.env.NODE_ENV === "production", // only HTTPS in prod
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            path: "/",
+            maxAge: 7 * 24 * 60 * 60 * 1000
         });
         res.send({ success: true});
     }
